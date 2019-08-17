@@ -1,0 +1,35 @@
+
+˜
+9
+android*http://schemas.android.com/apk/res/androidmanifest"/package$com.andforce.buildapkwithcommandline"K
+*http://schemas.android.com/apk/res/androidversionCode1"(›„„2:0"E
+*http://schemas.android.com/apk/res/androidversionName1.0.0(œ„„"R
+*http://schemas.android.com/apk/res/androidcompileSdkVersion28"(òŠ„2:0"O
+*http://schemas.android.com/apk/res/androidcompileSdkVersionCodename9(óŠ„"'platformBuildVersionCode1"2:0"!platformBuildVersionName1.0.0*
+
+    3*ş
+õapplication"N
+*http://schemas.android.com/apk/res/androidallowBackuptrue"(€…„2:@"r
+*http://schemas.android.com/apk/res/androidicon@drawable/ic_launcher"(‚€„2
+€€ˆødrawable/ic_launcher"i
+*http://schemas.android.com/apk/res/androidlabel@string/app_name"(€„2
+€€østring/app_name"N
+*http://schemas.android.com/apk/res/androidsupportsRtltrue"(¯‡„2:@*	
+        #*Ä
+»activity"F
+*http://schemas.android.com/apk/res/androidname.MainActivity(ƒ€„*
+            /*¼
+³intent-filter*
+                *e
+]action"S
+*http://schemas.android.com/apk/res/androidnameandroid.intent.action.MAIN(ƒ€„*
+
+                D*m
+ecategory"Y
+*http://schemas.android.com/apk/res/androidname android.intent.category.LAUNCHER(ƒ€„*
+            L*	
+        *
+    *
+
+
+
