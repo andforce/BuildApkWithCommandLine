@@ -18,9 +18,9 @@ android {
         }
     }
 
-    aaptOptions {
-        additionalParameters '-I', '/home/dy/Desktop/aapt/xxx.jar'
-    }
+//    aaptOptions {
+//        additionalParameters '-I', 'xx.jar'
+//    }
 }
 
 dependencies {
@@ -34,24 +34,58 @@ dependencies {
 
 }
 
-apply plugin: DebuggerPlugin
+//apply plugin: DebuggerPlugin
+//
+//import com.android.build.gradle.api.TestVariant
+//import com.android.build.gradle.api.UnitTestVariant
+//import com.android.build.gradle.internal.variant.ApplicationVariantData
+//import com.android.build.gradle.internal.api.ApplicationVariantImpl
+//
+//class DebuggerPlugin implements Plugin<Project> {
+//    void apply(Project project) {
+//        project.afterEvaluate {
+//            if (project.plugins.hasPlugin("com.android.application")) {
+//                def android = project.extensions.getByName("android")
+//                android.applicationVariants.all { ApplicationVariantImpl variant ->
+//                    project.logger.error "DebuggerPlugin>>>>>>:${variant}"
+////                    ApplicationVariantData apkVariantData = variant.getApkVariantData()
+////                    ApplicationVariantData variantData = variant.getVariantData()
+////                    TestVariant testVariant = variant.getTestVariant()
+////                    UnitTestVariant unitTestVariant = variant.getUnitTestVariant()
+//                }
+//            }
+//        }
+//    }
+//}
 
-import com.android.build.gradle.api.TestVariant
-import com.android.build.gradle.api.UnitTestVariant
-import com.android.build.gradle.internal.variant.ApplicationVariantData
-import com.android.build.gradle.internal.api.ApplicationVariantImpl
+apply plugin: PublicPlugin
 
-class DebuggerPlugin implements Plugin<Project> {
+class PublicPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.afterEvaluate {
             if (project.plugins.hasPlugin("com.android.application")) {
                 def android = project.extensions.getByName("android")
-                android.applicationVariants.all { ApplicationVariantImpl variant ->
-                    project.logger.error "DebuggerPlugin>>>>>>:${variant}"
-//                    ApplicationVariantData apkVariantData = variant.getApkVariantData()
-//                    ApplicationVariantData variantData = variant.getVariantData()
-//                    TestVariant testVariant = variant.getTestVariant()
-//                    UnitTestVariant unitTestVariant = variant.getUnitTestVariant()
+                android.applicationVariants.all {def variant ->
+
+                    project.logger.error "DebuggerPlugin>>>>>>:${"process${variant.name.capitalize()}Resources"}"
+
+                    def processResourcesTask = project.tasks.getByName("process${variant.name.capitalize()}Resources")
+                    if (processResourcesTask) {
+                        def aaptOptions = processResourcesTask.aaptOptions
+                        aaptOptions.additionalParameters("-I", "xx.jar")
+
+//                        File publicTxtFile = project.rootProject.file('public.txt')
+//                        //public文件存在，则应用，不存在则生成
+//                        if (publicTxtFile.exists()) {
+//                            project.logger.error "${publicTxtFile} exists, apply it."
+//                            //aapt2添加--stable-ids参数应用
+//                            aaptOptions.additionalParameters("--stable-ids", "${publicTxtFile}")
+//                        } else {
+//                            project.logger.error "${publicTxtFile} not exists, generate it."
+//                            //aapt2添加--emit-ids参数生成
+//                            aaptOptions.additionalParameters("--emit-ids", "${publicTxtFile}")
+//                        }
+                    }
                 }
             }
         }
