@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    aaptOptions {
+        additionalParameters '-I', '/home/dy/Desktop/aapt/xxx.jar'
+    }
 }
 
 dependencies {
