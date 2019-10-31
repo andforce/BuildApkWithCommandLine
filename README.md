@@ -15,11 +15,42 @@ aapt2 version
 
 当然还要设置JDK环境变量，这个比较常规，就不说了
 
+### 使用AAPT编译
+
+1. 创建编译目录
+
+```
+mkdir -p build/{classes,gen/R}
+```
+2. 编译资源文件，生成R.java
+```shell
+aapt package -v -f -m -S app/src/main/res -J build/gen/R/ -M app/src/main/AndroidManifest.xml -I ~/android-sdk/platforms/android-28/android.jar -I /home/dy/Desktop/aapt/smartisanos.jar
+```
+3. 编译java文件
+```shell
+javac -verbose -d ./build/classes/ -classpath ~/android-sdk/platforms/android-28/android.jar -sourcepath build/gen/R/ app/src/main/java/com/andforce/buildapkwithcommandline/*.java
+```
+4. 将class进行dex化
+```shell
+dx --dex --output=build/classes.dex build/classes/
+```
+5. 打包未签名apk
+```shell
+aapt package -v -f -M app/src/main/AndroidManifest.xml -S app/src/main/res -I ~/android-sdk/platforms/android-28/android.jar -F build/unsigned.apk
+
+```
+6. 签名apk
+```shell
+jarsigner -verbose -keystore ~/.android/debug.keystore -storepass android -keypass android build/unsigned.apk androiddebugkey
+# 安装
+adb install -r -d bin/unsigned.apk
+```
+
 ### 使用AAPT2编译
 
 1. 创建`build`目录
 ```shell
-mkdir build
+mkdir -p build/{classes,gen/R}
 ```
 
 2. 编译打包资源文件
@@ -29,7 +60,7 @@ aapt2 compile --dir app/src/main/res/ -o build/res.zip
 
 3. 连接资源文件ID,生成R.java
 ```bash
-aapt2 link --proto-format -o build/link_res_id_res.zip -I ~/android-sdk/platforms/android-28/android.jar build/res.zip --manifest app/src/main/AndroidManifest.xml --auto-add-overlay --java build/gen/R
+aapt2 link --proto-format -o build/link_res_id_res.zip -I ~/android-sdk/platforms/android-28/android.jar build/res.zip --manifest app/src/main/AndroidManifest.xml --min-sdk-version 21 --target-sdk-version 29 --auto-add-overlay --java build/gen/R
 ```
 4. 拆分资源包
 ```bash
@@ -68,33 +99,4 @@ java -jar bundletool-all-0.10.2.jar build-apks --bundle=build/bundle.aab --outpu
 10. 解压out.apks得到单个apk
 ```shell
 unzip -o build/out.apks -d build/
-```
-
-### 使用AAPT编译
-
-1. 创建编译目录
-
-```
-mkdir -p build/gen/R/
-```
-2. 编译资源文件，生成R.java
-```shell
-aapt package -v -f -m -S app/src/main/res -J build/gen/R/ -M app/src/main/AndroidManifest.xml -I ~/android-sdk/platforms/android-28/android.jar -I /home/dy/Desktop/aapt/smartisanos.jar
-```
-3. 
-```shell
-
-javac -verbose -d ./obj -classpath /home/dy/android-sdk/platforms/android-28/android.jar -sourcepath app/src/main/java/ app/src/main/java/com/andforce/buildapkwithcommandline/*.java
-
-
-~/android-sdk/build-tools/28.0.3/dx --dex --output=./bin/classes.dex ./obj
-
-
-aapt package -v -f -M app/src/main/AndroidManifest.xml -S app/src/main/res -I /home/dy/android-sdk/platforms/android-28/android.jar -I /home/dy/Desktop/aapt/smartisanos.jar -F ./bin/unsigned.apk ./bin
-
-
-
-jarsigner -verbose -keystore ~/.android/debug.keystore -storepass android -keypass android bin/unsigned.apk androiddebugkey
-
-adb install -r -d bin/unsigned.apk
 ```
