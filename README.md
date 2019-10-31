@@ -85,6 +85,7 @@ cd build/staging/ && zip -r ../base.zip ./* && cd -
 ```
 
 8. 打包abb
+
 下载最新的`bundletool`jar， https://github.com/google/bundletool/releases/latest
 用`bundletool-all-0.10.2.jar`为举例：
 ```shell
