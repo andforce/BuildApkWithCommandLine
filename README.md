@@ -20,7 +20,7 @@ aapt2 version
 1. 创建编译目录
 
 ```
-mkdir -p build/{classes,gen/R}
+mkdir -p build/{obj,classes,gen/R}
 ```
 2. 编译资源文件，生成R.java
 ```shell
@@ -32,18 +32,17 @@ javac -verbose -d ./build/classes/ -classpath ~/android-sdk/platforms/android-28
 ```
 4. 将class进行dex化
 ```shell
-dx --dex --output=build/classes.dex build/classes/
+dx --dex --output=build/obj/classes.dex build/classes/
 ```
 5. 打包未签名apk
 ```shell
-aapt package -v -f -M app/src/main/AndroidManifest.xml -S app/src/main/res -I ~/android-sdk/platforms/android-28/android.jar -F build/unsigned.apk
-
+aapt package -v -f -M app/src/main/AndroidManifest.xml --min-sdk-version 21 --target-sdk-version 29 -S app/src/main/res -I ~/android-sdk/platforms/android-28/android.jar -F build/unsigned.apk build/obj/
 ```
 6. 签名apk
 ```shell
 jarsigner -verbose -keystore ~/.android/debug.keystore -storepass android -keypass android build/unsigned.apk androiddebugkey
 # 安装
-adb install -r -d bin/unsigned.apk
+adb install -r -d build/unsigned.apk
 ```
 
 ### 使用AAPT2编译
