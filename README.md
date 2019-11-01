@@ -17,6 +17,37 @@ aapt2 version
 
 ### 使用AAPT编译
 
+编译完成后，build目录结构
+
+```bash
+build
+├── generated
+│   └── source
+│       └── com
+│           └── andforce
+│               └── build
+│                   └── R.java
+├── intermediates
+│   ├── classes
+│   │   └── com
+│   │       └── andforce
+│   │           └── build
+│   │               ├── MainActivity.class
+│   │               ├── R$attr.class
+│   │               ├── R.class
+│   │               ├── R$color.class
+│   │               ├── R$drawable.class
+│   │               ├── R$layout.class
+│   │               └── R$string.class
+│   └── dex
+│       └── classes.dex
+└── outputs
+    └── apk
+        └── unsigned.apk
+```
+
+
+
 1. 创建编译目录
 
 ```
@@ -48,6 +79,53 @@ adb install -r -d build/outputs/apk/signed.apk
 ```
 
 ### 使用AAPT2编译
+
+编译完成后，build目录结构
+
+```bash
+build
+├── generated
+│   └── source
+│       └── com
+│           └── andforce
+│               └── build
+│                   └── R.java
+├── intermediates
+│   ├── classes
+│   │   └── com
+│   │       └── andforce
+│   │           └── build
+│   │               ├── MainActivity.class
+│   │               ├── R.class
+│   │               ├── R$color.class
+│   │               ├── R$drawable.class
+│   │               ├── R$layout.class
+│   │               └── R$string.class
+│   ├── res
+│   │   ├── link_res_id_res.zip
+│   │   └── res.zip
+│   └── staging
+│       ├── dex
+│       │   └── classes.dex
+│       ├── manifest
+│       │   └── AndroidManifest.xml
+│       ├── res
+│       │   ├── drawable
+│       │   │   └── ic_launcher.png
+│       │   └── layout
+│       │       └── activity_main.xml
+│       └── resources.pb
+└── outputs
+    ├── aab
+    │   └── bundle.aab
+    ├── apk
+    │   ├── toc.pb
+    │   └── universal.apk
+    ├── base.zip
+    └── out.apks
+```
+
+
 
 1. 创建`build`目录
 ```shell
