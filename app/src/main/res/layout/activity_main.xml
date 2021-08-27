@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/first_tv"
         android:layout_width="match_parent"
         android:layout_height="@*android:dimen/datepicker_view_animator_height"
         android:background="#FF0000ff"
