@@ -12,10 +12,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.getResources();
-        int value = Resources.getSystem().getIdentifier("datepicker_view_animator_height", "dimen", "android");
+        int value = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android");
         int dimensionPixelSize = getResources().getDimensionPixelSize(value);
         TextView textView = (TextView) findViewById(R.id.first_tv);
-        String text = "@*android:datepicker_view_animator_height, pixelSize: " + dimensionPixelSize;
+        String text = "@*android:status_bar_height, pixelSize: " + dimensionPixelSize;
         textView.setText(text);
     }
 }
