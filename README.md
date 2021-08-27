@@ -15,6 +15,8 @@ aapt2 version
 
 当然还要设置JDK环境变量，这个比较常规，就不说了
 
+`注意⚠️：android.jar 的版本要跟运行到手机系统匹配，比如手机系统是android 6.0, 那么你需要使用 $androidsdk/platforms/android-23/android.jar`
+
 ### 使用AAPT编译
 
 编译完成后，build目录结构
