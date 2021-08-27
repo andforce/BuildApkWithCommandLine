@@ -6,7 +6,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@*android:dimen/datepicker_view_animator_height"
         android:background="#FF0000ff"
         android:gravity="center"
         android:text="@string/app_name"
