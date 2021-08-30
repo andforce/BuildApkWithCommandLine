@@ -1,24 +1,24 @@
-export PATH=$PATH:"${ANDROID_HOME}/build-tools/30.0.2/"
+#!/bin/bash
+export PATH=$PATH:"${ANDROID_HOME}/build-tools/30.0.2/" && \
 
-SDK_30="${ANDROID_HOME}/platforms/android-23/android.jar"
-echo "$SDK_30"
+SDK_30="${ANDROID_HOME}/platforms/android-23/android.jar" && \
 
-rm -rf build/
+echo "$SDK_30" && \
 
-mkdir -p build/{outputs/apk,intermediates/{classes,dex},generated/source}
+rm -rf build/ && \
 
-aapt package -v -f -m -S app/src/main/res -J build/generated/source/ -M app/src/main/AndroidManifest.xml -I "$SDK_30"
+mkdir -p build/{outputs/apk,intermediates/{classes,dex},generated/source}  && \
 
-javac -verbose -d build/intermediates/classes/ -classpath "$SDK_30" -sourcepath build/generated/source/ app/src/main/java/com/andforce/build/*.java
+aapt package -v -f -m -S app/src/main/res -J build/generated/source/ -M app/src/main/AndroidManifest.xml -I "$SDK_30" && \
 
-dx --dex --output=build/intermediates/dex/classes.dex build/intermediates/classes/
+javac -verbose -d build/intermediates/classes/ -classpath "$SDK_30" -sourcepath build/generated/source/ app/src/main/java/com/andforce/build/*.java && \
 
-aapt package -v -f -M app/src/main/AndroidManifest.xml --min-sdk-version 21 --target-sdk-version 23 -S app/src/main/res -I "$SDK_30" -F build/outputs/apk/unsigned.apk build/intermediates/dex/
+dx --dex --output=build/intermediates/dex/classes.dex build/intermediates/classes/ && \
 
-jarsigner -verbose -keystore ~/.android/debug.keystore -storepass android -keypass android build/outputs/apk/unsigned.apk androiddebugkey
+aapt package -v -f -M app/src/main/AndroidManifest.xml --min-sdk-version 21 --target-sdk-version 23 -S app/src/main/res -I "$SDK_30" -F build/outputs/apk/unsigned.apk build/intermediates/dex/ && \
 
-# rename
-mv build/outputs/apk/unsigned.apk build/outputs/apk/signed.apk
+jarsigner -verbose -keystore ~/.android/debug.keystore -storepass android -keypass android build/outputs/apk/unsigned.apk androiddebugkey && \
 
-# 安装
+mv build/outputs/apk/unsigned.apk build/outputs/apk/signed.apk && \
+
 adb install -r -d build/outputs/apk/signed.apk
